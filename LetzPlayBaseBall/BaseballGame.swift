@@ -31,14 +31,13 @@ class BaseballGame {
             
             let result = compare(numbers, with: answer) // 입력된 숫자와 정답 비교
             
+            // 결과 출력
+            displayResult(result)
+                        
             // 스트라이크 개수가 3이면 게임 종료
             if result.strikes == 3 {
                 print("정답입니다!")
                 break
-            } else if result.strikes == 0 && result.balls == 0 { // 스트라이크와 볼이 모두 0이면 Nothing 출력
-                print("Nothing")
-            } else { // 스트라이크와 볼의 개수 출력
-                print("\(result.strikes)스트라이크 \(result.balls)볼")
             }
         }
     }
@@ -71,5 +70,14 @@ class BaseballGame {
         
         return (strikes, balls) // 스트라이크와 볼의 개수를 튜플로 반환
     }
+    
+    // 결과 출력 함수
+        private func displayResult(_ result: (strikes: Int, balls: Int)) {
+            if result.strikes == 0 && result.balls == 0 {
+                print("Nothing")
+            } else {
+                print("\(result.strikes)스트라이크 \(result.balls)볼")
+            }
+        }
 }
 
