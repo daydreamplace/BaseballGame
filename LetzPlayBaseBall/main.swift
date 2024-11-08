@@ -2,10 +2,9 @@
 //  main.swift
 //  LetzPlayBaseBall
 //
-//  Created by youbin on 11/7/24.
+//  Created by eden on 11/7/24.
 //
 
-import Foundation
-
-print("Hello, World!")
+let game = BaseballGame()
+game.start()
 
