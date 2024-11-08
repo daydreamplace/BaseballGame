@@ -11,7 +11,7 @@ class BaseballGame {
     // 게임 시작 함수
     func start() {
         let answer = makeAnswer() // 숫자 생성
-        print("게임을 시작하지")
+        print("게임을 시작하지") // 게임 시작 메시지 출력
         
         while true {
             // 사용자로부터 숫자 입력 받기
@@ -29,26 +29,16 @@ class BaseballGame {
                 continue
             }
             
-            var strikes = 0 // 스트라이크 개수 초기화
-            var balls = 0 // 볼 개수 초기화
-            
-            // 입력된 숫자와 정답 비교
-            for (index, number) in numbers.enumerated() {
-                if answer[index] == number { // 같은 자리에 같은 숫자가 있으면 스트라이크 증가
-                    strikes += 1
-                } else if answer.contains(number) { // 다른 자리에 같은 숫자가 있으면 볼 증가
-                    balls += 1
-                }
-            }
+            let result = compare(numbers, with: answer) // 입력된 숫자와 정답 비교
             
             // 스트라이크 개수가 3이면 게임 종료
-            if strikes == 3 {
+            if result.strikes == 3 {
                 print("정답입니다!")
                 break
-            } else if strikes == 0 && balls == 0 { // 스트라이크와 볼이 모두 0이면 Nothing 출력
+            } else if result.strikes == 0 && result.balls == 0 { // 스트라이크와 볼이 모두 0이면 Nothing 출력
                 print("Nothing")
-            } else {
-                print("\(strikes)스트라이크 \(balls)볼")
+            } else { // 스트라이크와 볼의 개수 출력
+                print("\(result.strikes)스트라이크 \(result.balls)볼")
             }
         }
     }
@@ -65,4 +55,21 @@ class BaseballGame {
         
         return Array(numbers) // Set을 배열로 변환해 반환
     }
+    
+    // 사용자 입력과 정답 비교
+    private func compare(_ guess: [Int], with answer: [Int]) -> (strikes: Int, balls: Int) {
+        var strikes = 0
+        var balls = 0
+        
+        for (index, number) in guess.enumerated() {
+            if answer[index] == number { // 같은 자리에 같은 숫자가 있으면 스트라이크 증가
+                strikes += 1
+            } else if answer.contains(number) { // 다른 자리에 같은 숫자가 있으면 볼 증가
+                balls += 1
+            }
+        }
+        
+        return (strikes, balls) // 스트라이크와 볼의 개수를 튜플로 반환
+    }
 }
+
