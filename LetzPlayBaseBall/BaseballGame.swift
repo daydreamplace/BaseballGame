@@ -21,14 +21,7 @@ class BaseballGame {
                 continue
             }
             
-            // 입력된 문자열을 각 문자로 나누어 정수 배열로 변환
-            let numbers = input.compactMap { Int(String($0)) }
-            guard numbers.count == 3, Set(numbers).count == 3, numbers.allSatisfy({ $0 >= 1 && $0 <= 9 }) else {
-                // 입력값이 3자리 숫자가 아니거나, 중복된 숫자가 있거나, 1-9 범위를 벗어난 경우 오류 메시지 출력
-                print("올바르지 않은 입력값")
-                continue
-            }
-            
+            let numbers = getUserInput() // 입력값 유효성 검사 및 변환
             let result = compare(numbers, with: answer) // 입력된 숫자와 정답 비교
             
             // 결과 출력
@@ -54,6 +47,26 @@ class BaseballGame {
         
         return Array(numbers) // Set을 배열로 변환해 반환
     }
+    
+    // 사용자 입력 받기 및 유효성 검사
+    private func getUserInput() -> [Int] {
+        while true {
+            print("숫자를 입력하세요: ", terminator: "")
+            guard let input = readLine() else { // 입력값이 없으면 반복문 처음으로 돌아감
+                print("올바르지 않은 입력값입니다")
+                continue
+            }
+            
+            let numbers = input.compactMap { Int(String($0)) }
+            guard numbers.count == 3, Set(numbers).count == 3, numbers.allSatisfy({ $0 >= 1 && $0 <= 9 }) else {
+                // 입력값이 3자리 숫자가 아니거나, 중복된 숫자가 있거나, 1-9 범위를 벗어난 경우 오류 메시지 출력
+                print("올바르지 않은 입력값입니다")
+                continue
+            }
+            return numbers
+        }
+    }
+    
     
     // 사용자 입력과 정답 비교
     private func compare(_ guess: [Int], with answer: [Int]) -> (strikes: Int, balls: Int) {
